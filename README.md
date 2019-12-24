@@ -6,8 +6,16 @@ Requires Ruby 2.+
 
 ```
 $ ruby runner.rb
-=> Part 1: Number of houses using 1 worker: 2565
-   Part 2: Number of houses using 2 workers: 2639
+=> Number of houses using 1 worker: 2565
+   Number of houses using 2 worker: 2639
+```
+
+Optionally you can pass the instructions filename as an argument
+
+```
+$ ruby runner.rb instructions.txt
+=> Number of houses using 1 worker: 2565
+   Number of houses using 2 worker: 2639
 ```
 
 ## Run tests
