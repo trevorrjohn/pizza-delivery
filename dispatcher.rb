@@ -23,6 +23,6 @@ class Dispatcher
   attr_reader :instructions, :worker_count
 
   def workers
-    @workers ||= worker_count.times.map { Worker.new }
+    @workers ||= worker_count.times.map { |n| Worker.new("Worker #{n}")}
   end
 end

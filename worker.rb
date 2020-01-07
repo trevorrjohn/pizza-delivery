@@ -6,7 +6,10 @@ class Worker
   LEFT  = "<".freeze
   RIGHT = ">".freeze
 
-  def initialize
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
     @x = 0
     @y = 0
   end
