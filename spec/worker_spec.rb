@@ -54,4 +54,28 @@ RSpec.describe Worker do
       expect(subject.move(described_class::LEFT)).to eq "0,0"
     end
   end
+
+  describe "#houses" do
+    it "keeps track of position" do
+      subject = described_class.new("Maria")
+
+      expect(subject.houses).to contain_exactly "0,0"
+      subject.move(described_class::DOWN)
+      expect(subject.houses).to contain_exactly "0,0", "0,-1"
+      subject.move(described_class::DOWN)
+      expect(subject.houses).to contain_exactly "0,0", "0,-1", "0,-2"
+      subject.move(described_class::RIGHT)
+      expect(subject.houses).to contain_exactly "0,0", "0,-1", "0,-2", "1,-2"
+      subject.move(described_class::RIGHT)
+      expect(subject.houses).to contain_exactly "0,0", "0,-1", "0,-2", "1,-2", "2,-2"
+      subject.move(described_class::UP)
+      expect(subject.houses).to contain_exactly "0,0", "0,-1", "0,-2", "1,-2", "2,-2", "2,-1"
+      subject.move(described_class::LEFT)
+      expect(subject.houses).to contain_exactly "0,0", "0,-1", "0,-2", "1,-2", "2,-2", "2,-1", "1,-1"
+      subject.move(described_class::UP)
+      expect(subject.houses).to contain_exactly "0,0", "0,-1", "0,-2", "1,-2", "2,-2", "2,-1", "1,-1", "1,0"
+      subject.move(described_class::LEFT)
+      expect(subject.houses).to contain_exactly "0,0", "0,-1", "0,-2", "1,-2", "2,-2", "2,-1", "1,-1", "1,0"
+    end
+  end
 end

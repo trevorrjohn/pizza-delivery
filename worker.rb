@@ -1,22 +1,27 @@
 # frozen_string_literal: true
 
+require "set"
+
 class Worker
   UP    = "^".freeze
   DOWN  = "v".freeze
   LEFT  = "<".freeze
   RIGHT = ">".freeze
 
-  attr_reader :name
+  attr_reader :name, :houses
 
   def initialize(name)
     @name = name
     @x = 0
     @y = 0
+    @houses = Set["0,0"]
   end
 
   def move(direction)
     update_position(direction)
-    "#{x},#{y}"
+    new_position = "#{x},#{y}"
+    houses.add(new_position)
+    new_position
   end
 
   private
