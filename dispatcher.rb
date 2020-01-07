@@ -14,7 +14,7 @@ class Dispatcher
 
   def dispatch
     instructions.each.with_index do |direction, i|
-      houses.add(workers[i % workers.size].move(direction))
+      houses.add(workers[i % worker_count].move(direction))
     end
   end
 
