@@ -5,8 +5,8 @@ require_relative "./dispatcher.rb"
 filename = ARGV.first || "instructions.txt"
 instructions = File.read(filename).split("")
 
-[1, 2].each do |workers|
-  dispatcher = Dispatcher.new(instructions: instructions, worker_count: workers)
-  dispatcher.dispatch
-  puts "Number of houses using #{workers} worker: #{dispatcher.houses.size}"
-end
+maria = Worker.new("Maria")
+clovis = Worker.new("Clovis")
+dispatcher = Dispatcher.new(instructions: instructions, workers: [maria, clovis])
+dispatcher.dispatch
+puts "Number of houses using 2 workers: #{dispatcher.houses.size}"
