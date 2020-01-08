@@ -3,13 +3,13 @@
 require_relative "./dispatcher.rb"
 require_relative "./summarizer.rb"
 
-filename = ARGV.first || "instructions.txt"
+filename = ARGV.shift || "instructions.txt"
 instructions = File.read(filename).split("")
+names = ARGV.any? ? ARGV : %w[Maria Clovis]
 
-maria = Worker.new("Maria")
-clovis = Worker.new("Clovis")
-dispatcher = Dispatcher.new(instructions: instructions, workers: [maria, clovis])
+workers = names.map { |name| Worker.new(name) }
+dispatcher = Dispatcher.new(instructions: instructions, workers: workers)
 dispatcher.dispatch
-summarizer = Summarizer.new([maria, clovis])
+summarizer = Summarizer.new(workers)
 puts summarizer.summary
 puts summarizer.total
