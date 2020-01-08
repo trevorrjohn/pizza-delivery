@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 require_relative "./dispatcher.rb"
+require_relative "./summarizer.rb"
 
-filename = ARGV.first || "instructions.txt"
+filename = ARGV.shift || "instructions.txt"
 instructions = File.read(filename).split("")
+names = ARGV.any? ? ARGV : %w[Maria Clovis]
 
-[1, 2].each do |workers|
-  dispatcher = Dispatcher.new(instructions: instructions, worker_count: workers)
-  dispatcher.dispatch
-  puts "Number of houses using #{workers} worker: #{dispatcher.houses.size}"
-end
+workers = names.map { |name| Worker.new(name) }
+dispatcher = Dispatcher.new(instructions: instructions, workers: workers)
+dispatcher.dispatch
+summarizer = Summarizer.new(workers)
+puts summarizer.summary
+puts summarizer.total

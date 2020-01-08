@@ -6,23 +6,21 @@ require_relative "./worker.rb"
 class Dispatcher
   attr_reader :houses
 
-  def initialize(instructions:, worker_count:)
+  def initialize(instructions:, workers:)
     @instructions = instructions
-    @worker_count = worker_count
+    @workers = workers
     @houses = Set["0,0"]
   end
 
   def dispatch
+    return if workers.empty?
+
     instructions.each.with_index do |direction, i|
-      houses.add(workers[i % worker_count].move(direction))
+      houses.add(workers[i % workers.size].move(direction))
     end
   end
 
   private
 
-  attr_reader :instructions, :worker_count
-
-  def workers
-    @workers ||= worker_count.times.map { Worker.new }
-  end
+  attr_reader :instructions, :workers
 end
