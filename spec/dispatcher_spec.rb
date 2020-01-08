@@ -3,6 +3,16 @@
 require "spec_helper"
 
 RSpec.describe Dispatcher do
+  context "with no workers" do
+    it "does not process instructions" do
+      subject = described_class.new(instructions: ["^"], workers: [])
+
+      subject.dispatch
+
+      expect(subject.houses).to contain_exactly "0,0"
+    end
+  end
+
   context "with zero instructions" do
     it "delivers to the starting location" do
       workers = [Worker.new("Maria")]
@@ -10,7 +20,7 @@ RSpec.describe Dispatcher do
 
       subject.dispatch
 
-      expect(subject.houses.to_a).to eq ["0,0"]
+      expect(subject.houses).to contain_exactly "0,0"
     end
   end
 
@@ -23,7 +33,7 @@ RSpec.describe Dispatcher do
 
       subject.dispatch
 
-      expect(subject.houses.to_a).to eq ["0,0", "0,-1"]
+      expect(subject.houses).to contain_exactly "0,0", "0,-1"
       expect(worker).to have_received(:move).with("v").with("^").ordered
     end
   end
@@ -41,7 +51,7 @@ RSpec.describe Dispatcher do
 
       subject.dispatch
 
-      expect(subject.houses.to_a).to match_array ["0,0", "0,-1", "0,1", "1,0"]
+      expect(subject.houses).to contain_exactly "0,0", "0,-1", "0,1", "1,0"
       expect(worker1).to have_received(:move).with("v").with("^").ordered
       expect(worker1).to have_received(:move).twice
       expect(worker2).to have_received(:move).with("^")

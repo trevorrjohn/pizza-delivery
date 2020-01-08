@@ -13,6 +13,8 @@ class Dispatcher
   end
 
   def dispatch
+    return if workers.empty?
+
     instructions.each.with_index do |direction, i|
       houses.add(workers[i % workers.size].move(direction))
     end
